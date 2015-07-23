@@ -1,15 +1,18 @@
+'use strict';
+
 var source = require('vinyl-source-stream');
 var gulp = require('gulp');
-var gutil = require('gulp-util');
+// var gutil = require('gulp-util');
 var browserify = require('browserify');
-var reactify = require('reactify');
+// var reactify = require('reactify');
 var watchify = require('watchify');
-var notify = require("gulp-notify");
+// var notify = require('gulp-notify');
 var shell = require('gulp-shell');
 var dbTask = require('gulp-db');
+var babelify = require('babelify');
 
-var scriptsDir = './client/scripts';
-var buildDir = './public';
+// var scriptsDir = './client/scripts';
+// var buildDir = './public';
 
 var dbManager = dbTask({
   //Comment out below and use bottom credentials for Heroku
@@ -47,7 +50,7 @@ gulp.task('serve', ['browserify'], shell.task([
 gulp.task('browserify', function() {
     var bundler = browserify({
         entries: ['./client/scripts/app.js'], // Only need initial file, browserify finds the deps
-        transform: [reactify], // We want to convert JSX to normal javascript
+        transform: [babelify], // We want to convert JSX to normal javascript
         debug: true, // Gives us sourcemapping
         cache: {}, packageCache: {}, fullPaths: true // Requirement of watchify
     });
